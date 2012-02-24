@@ -20,4 +20,19 @@ class Mcpp < Formula
     system "make install"
   end
 
+  def test
+      # Checks that the output from mcpp -C (with comments) is:
+      #
+      #   #line 1 "<stdin>"
+      #   //comment
+      #   test;
+      #
+      # and not:
+      #
+      #   #line 1 "<stdin>"
+      #   //commenttest;
+      #
+      system 'echo "test; //comment" | mcpp -C | wc -l | grep -q 3'
+  end
+
 end
